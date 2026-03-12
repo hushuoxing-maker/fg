@@ -15,12 +15,11 @@ box-sizing:border-box;
 font-family:"Microsoft YaHei",sans-serif;
 }
 
-/* 页面背景 */
+/* 背景 */
 
 body{
 
-background:
-linear-gradient(135deg,#2b1d15,#4a3326,#24160f);
+background:linear-gradient(135deg,#2b1d15,#4a3326,#24160f);
 
 color:#fff;
 
@@ -54,91 +53,37 @@ opacity:.8;
 
 /* 输入区域 */
 
-.inputBox{
+.formBox{
 
 max-width:900px;
-
 margin:auto;
-
-margin-bottom:20px;
-
-display:flex;
-
-gap:10px;
-
-}
-
-.inputBox input{
-
-flex:1;
-
-padding:16px;
-
-border:none;
-
-border-radius:10px;
-
-font-size:16px;
-
-background:#fff;
-
-color:#000;
-
-}
-
-/* 辅助文字框 */
-
-.assistBox{
-
-max-width:900px;
-
-margin:auto;
-
 margin-bottom:30px;
 
+display:flex;
+flex-direction:column;
+gap:12px;
+
 }
 
-.assistBox input{
-
-width:100%;
+.formBox input{
 
 padding:16px;
-
 border:none;
-
 border-radius:10px;
-
 font-size:15px;
 
 }
 
-/* 按钮 */
+.formBox button{
 
-.inputBox button{
-
-padding:16px 28px;
-
+padding:16px;
 border:none;
-
 background:linear-gradient(45deg,#ffb347,#ffd28a);
-
 color:#000;
-
 font-weight:bold;
-
 border-radius:10px;
-
 cursor:pointer;
-
-transition:.3s;
-
-}
-
-.inputBox button:hover{
-
-transform:translateY(-2px);
-
-box-shadow:0 8px 20px rgba(0,0,0,0.5);
+font-size:16px;
 
 }
 
@@ -147,9 +92,7 @@ box-shadow:0 8px 20px rgba(0,0,0,0.5);
 .grid{
 
 display:grid;
-
 grid-template-columns:repeat(auto-fill,minmax(420px,1fr));
-
 gap:25px;
 
 }
@@ -158,13 +101,7 @@ gap:25px;
 
 .card{
 
-background:
-
-linear-gradient(
-135deg,
-#fff6e6,
-#f3e2c9
-);
+background:linear-gradient(135deg,#fff6e6,#f3e2c9);
 
 color:#2b1d15;
 
@@ -172,11 +109,7 @@ border-radius:18px;
 
 padding:22px;
 
-border:1px solid rgba(255,255,255,0.2);
-
-box-shadow:
-
-0 12px 30px rgba(0,0,0,0.4);
+box-shadow:0 12px 30px rgba(0,0,0,0.4);
 
 transition:.3s;
 
@@ -193,39 +126,28 @@ transform:translateY(-6px);
 .prompt{
 
 font-size:14px;
-
 line-height:1.8;
-
 white-space:pre-wrap;
 
 }
 
-/* 复制按钮 */
+/* 按钮 */
 
 .copyBtn{
 
 margin-top:15px;
-
 background:linear-gradient(45deg,#ffb347,#ffd28a);
-
 color:#000;
-
 border:none;
-
 padding:8px 16px;
-
 border-radius:8px;
-
 cursor:pointer;
-
 font-size:13px;
 
 }
 
 .copyBtn:hover{
-
 background:#ffc76a;
-
 }
 
 </style>
@@ -243,18 +165,15 @@ background:#ffc76a;
 </div>
 
 
-<div class="inputBox">
+<div class="formBox">
 
-<input id="themeInput" placeholder="输入海报主题 / 产品名称 / 活动名称">
+<input id="themeInput" placeholder="输入海报主标题">
 
-<button onclick="generate()">生成提示词</button>
+<input id="subtitleInput" placeholder="输入海报副标题（可选）">
 
-</div>
+<input id="assistInput" placeholder="辅助文字（可输入多个，用 / 分隔）">
 
-
-<div class="assistBox">
-
-<input id="assistInput" placeholder="辅助文字（可输入多个，用 / 分隔，例如：复古限定 / 老字号推荐 / 时光记忆）">
+<button onclick="generate()">生成20组提示词</button>
 
 </div>
 
@@ -311,14 +230,14 @@ function generate(){
 
 let theme=document.getElementById("themeInput").value || "复古市集"
 
+let subtitleInput=document.getElementById("subtitleInput").value
+
 let assistInput=document.getElementById("assistInput").value
 
 let userTags=[]
 
 if(assistInput){
-
 userTags=assistInput.split("/")
-
 }
 
 let container=document.getElementById("result")
@@ -326,6 +245,8 @@ let container=document.getElementById("result")
 container.innerHTML=""
 
 for(let i=1;i<=20;i++){
+
+let subtitle=subtitleInput || rand(subtitles)
 
 let tag1=userTags.length?rand(userTags):rand(tags)
 let tag2=userTags.length?rand(userTags):rand(tags)
@@ -335,7 +256,7 @@ let text=`
 
 主标题：${theme}
 
-副标题：${rand(subtitles)}
+副标题：${subtitle}
 
 辅助文字：${tag1} / ${tag2} / ${tag3}
 
