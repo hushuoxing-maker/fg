@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时光印记 · 高级复古风格海报提示词智能体 - 古月AI智能体</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Microsoft YaHei",sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(135deg,#3b2a1f,#5a3d2b,#2a1c14);
+
+color:#fff;
+padding:40px;
+min-height:100vh;
+
+}
+
+/* 标题 */
+
+.header{
+text-align:center;
+margin-bottom:40px;
+}
+
+.header h1{
+font-size:34px;
+letter-spacing:3px;
+margin-bottom:10px;
+}
+
+.header p{
+opacity:.8;
+}
+
+/* 输入框 */
+
+.inputBox{
+max-width:900px;
+margin:auto;
+margin-bottom:40px;
+display:flex;
+gap:10px;
+}
+
+.inputBox input{
+
+flex:1;
+padding:16px;
+border:none;
+border-radius:10px;
+font-size:16px;
+}
+
+.inputBox button{
+
+padding:16px 28px;
+border:none;
+background:linear-gradient(45deg,#ffb347,#ffcc70);
+color:#000;
+font-weight:bold;
+border-radius:10px;
+cursor:pointer;
+}
+
+/* 卡片区域 */
+
+.grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(420px,1fr));
+gap:25px;
+
+}
+
+/* 卡片 */
+
+.card{
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(10px);
+
+border-radius:18px;
+
+padding:22px;
+
+border:1px solid rgba(255,255,255,0.15);
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-6px);
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+}
+
+.prompt{
+
+font-size:14px;
+line-height:1.8;
+white-space:pre-wrap;
+
+}
+
+/* 复制按钮 */
+
+.copyBtn{
+
+margin-top:15px;
+background:#fff;
+color:#000;
+border:none;
+padding:8px 16px;
+border-radius:8px;
+cursor:pointer;
+font-size:13px;
+
+}
+
+.copyBtn:hover{
+background:#ffd28a;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="header">
+
+<h1>时光印记 · 高级复古风格海报提示词智能体</h1>
+
+<p>输入主题自动生成 20 组复古海报 AI 提示词</p>
+
+</div>
+
+
+<div class="inputBox">
+
+<input id="themeInput" placeholder="输入海报主题 / 产品名称 / 活动名称">
+
+<button onclick="generate()">生成提示词</button>
+
+</div>
+
+
+<div id="result" class="grid"></div>
+
+
+
+<script>
+
+const subtitles=[
+
+"经典重现的年代味道",
+"旧时光里的温暖故事",
+"怀旧情绪特别呈现",
+"一场属于时代的回忆",
+"老时光里的经典设计",
+"年代感视觉艺术呈现"
+
+]
+
+const tags=[
+
+"怀旧特辑",
+"经典重现",
+"年代限定",
+"老字号推荐",
+"复古市集",
+"时光记忆",
+"怀旧收藏",
+"经典设计",
+"复古艺术",
+"时代印记"
+
+]
+
+const visuals=[
+
+"月份牌美人、旗袍、留声机",
+"80年代老电视、卡带、游戏机",
+"胶片相机、老电影海报、旧广告",
+"老爷车、复古收音机、旧唱片",
+"泛黄照片、邮票、粮票",
+"搪瓷杯、旧书、老台灯"
+
+]
+
+function rand(arr){
+return arr[Math.floor(Math.random()*arr.length)]
+}
+
+
+function generate(){
+
+let theme=document.getElementById("themeInput").value || "复古市集"
+
+let container=document.getElementById("result")
+
+container.innerHTML=""
+
+for(let i=1;i<=20;i++){
+
+let text=`
+
+主标题：${theme}
+
+副标题：${rand(subtitles)}
+
+辅助文字：${rand(tags)} / ${rand(tags)} / ${rand(tags)}
+
+核心视觉元素：
+${rand(visuals)} + 旧报纸拼贴 + 泛黄纸张纹理
+
+视觉表现手法：
+纸张泛黄、边缘磨损、水渍霉斑、印刷网点放大、色彩轻微褪色
+
+文字布局：
+主标题采用复古招牌字体居中排版，副标题以旧报纸标签形式呈现，辅助文字以邮票或票根形式点缀
+
+风格描述：
+浓厚年代气息、真实做旧质感、怀旧故事氛围、参赛级复古海报设计
+
+`
+
+let card=document.createElement("div")
+card.className="card"
+
+card.innerHTML=`
+
+<div class="prompt">${text}</div>
+
+<button class="copyBtn">复制提示词</button>
+
+`
+
+container.appendChild(card)
+
+let btn=card.querySelector(".copyBtn")
+
+btn.onclick=function(){
+
+navigator.clipboard.writeText(text)
+
+btn.innerText="复制成功"
+
+setTimeout(()=>{
+btn.innerText="复制提示词"
+},3000)
+
+}
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
